@@ -1,6 +1,6 @@
 info:
   title: 'Delilah Resto'
-  description: 'Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.'
+  description: ''
   version: '1.0.0'
   contact:
     email: 'jasa1999@hotmail.com'
@@ -39,7 +39,7 @@ paths:
           schema:
             $ref: '#/definitions/User'
 
-    post:
+    patch:
       tags:
         - 'profile'
       description: Update current logged user values
@@ -56,64 +56,322 @@ paths:
   /users:
     get:
       description: List all users
-      summary: Returns a list of users.
-      operationId: listUsers
-      produces:
-      - 'application/json'
-      responses:
-        '200':
-          description: A JSON array of users
-          schema:
-            type: array
-            items:
+        summary: Returns a list of users.
+        operationId: listUsers
+        produces:
+        - 'application/json'
+        responses:
+          '200':
+            description: A JSON array of users
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/User'
+
+    post:
+      description: Returns a single user object
+        summary: Create new User
+        operationId: createUser
+        produces:
+        - 'application/json'
+        responses:
+          '201':
+            description: A User object
+            schema:
               $ref: '#/definitions/User'
-#
-#    post:
-#      description: Returns a single user object
-#      summary: Create new User
-#      operationId: createUser
-#      produces:
-#      - 'application/json'
-#      responses:
-#        '201':
-#          description: A User object
-#          schema:
-#            $ref: '#/definitions/User'
-#
-#        '400':
-#          description: Invalid or empty username or password
-#          schema:
-#            $ref: '#/definitions/RequestError'
-#
-#  /users/{userId}:
-#    get:
-#      summary: Find User by id
-#      description: Returns a single user object
-#      operationId: GetUserById
-#      produces:
-#      - 'application/json'
-#      responses:
-#        '200':
-#          description: Current User
-#          schema:
-#            $ref: '#/definitions/User'
-#
-#        '400':
-#          description: User does not exists
-#          schema:
-#            $ref: '#/definitions/RequestError'
-#
-#    delete:
-#      operationId: DeleteUserById
-#      summary: Returns a single user by its id
-#      responses:
-#        '204':
-#          description: User deleted
-#
-#        '400':
-#          description: User does not exists
-#          schema:
-#            $ref: '#/definitions/RequestError'
+
+        '400':
+          description: Invalid or empty username or password
+          schema:
+            $ref: '#/definitions/RequestError'
+
+    /users/{userId}:
+      get:
+        tags:
+          - 'users/:id'
+        description: Returns a single user object
+          summary: Find User by id
+          operationId: GetUserById
+          produces:
+          - 'application/json'
+          responses:
+            '200':
+              description: Current User
+              schema:
+                $ref: '#/definitions/User'
+
+            '400':
+              description: User does not exists
+              schema:
+                $ref: '#/definitions/RequestError'
+
+      delete:
+        tags:
+          - 'users/:id'
+        descrption:
+          operationId: DeleteUserById
+          summary: Returns a single user by its id
+          responses:
+            '204':
+              description: User deleted
+              schema:
+                $ref: '#/definitions/User'
+
+            '400':
+              description: User does not exists
+              schema:
+                $ref: '#/definitions/RequestError'
+
+      put:
+        tags:
+          - 'users/:id'
+        description: Returns a single user object
+          summary: Replace user entity by id 
+          operati
+          responses:
+            '204':
+              description: User replaced
+              schema:
+                $ref: '#/definitions/User'
+
+            '400':
+              description: User cannot be replaced
+              schema:
+                $ref: '#/definitions/RequestError'
+
+      patch:
+        tags:
+          - 'users/:id'
+        description: Update current logged user values
+          summary: Update user by PK
+          operationId: updateUser
+          produces:
+          - 'application/json'
+          responses:
+            '200':
+              description: Update user profile
+              schema:
+                $ref: '#/definitions/User'
+            '400':
+              description: User cannot be updated
+              schema:
+                $ref: '#/definitions/RequestError'
+
+  /products:
+    get:
+      tags:
+          - 'products'
+      description: List all products
+        summary: Returns a list of products.
+        operationId: listProducts
+        produces:
+        - 'application/json'
+        responses:
+          '200':
+            description: A JSON array of products
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Products'
+
+    post:      
+      tags:
+        - 'products'
+      description: Returns a single product object
+        summary: Create new Product
+        operationId: createProduct
+        produces:
+        - 'application/json'
+        responses:
+          '201':
+            description: A Product object
+            schema:
+              $ref: '#/definitions/Product'
+
+        '400':
+          description: Invalid or empty username or password
+          schema:
+            $ref: '#/definitions/RequestError'
+
+    /products/{productsId}:
+      get:
+        tags:
+          - 'products/:id'
+        description: Returns a single product object
+          summary: Find Product by id
+          operationId: GetProductById
+          produces:
+          - 'application/json'
+          responses:
+            '200':
+              description: Current Product
+              schema:
+                $ref: '#/definitions/Product'
+
+            '400':
+              description: Product does not exists
+              schema:
+                $ref: '#/definitions/RequestError'
+
+      delete:
+        tags:
+          - 'products/:id'
+        descrption:
+          operationId: DeleteProductById
+          summary: Returns a single product by its id
+          responses:
+            '204':
+              description: Product deleted
+              schema:
+                $ref: '#/definitions/Product'
+
+            '400':
+              description: Product does not exists
+              schema:
+                $ref: '#/definitions/RequestError'
+
+      put:
+        tags:
+          - 'product/:id'
+        description: Returns a single product object
+          summary: Replace product entity by id 
+          operationId: setProduct
+          responses:
+            '204':
+              description: Product replaced
+              schema:
+                $ref: '#/definitions/Product'
+
+            '400':
+              description: User cannot be replaced
+              schema:
+                $ref: '#/definitions/RequestError'
+
+      patch:
+        tags:
+          - 'products/:id'
+        description: Update current product values
+          summary: Update product by PK
+          operationId: updateProduct
+          produces:
+          - 'application/json'
+          responses:
+            '200':
+              description: Update product information
+              schema:
+                $ref: '#/definitions/Product'
+            '400':
+              description: Product cannot be updated
+              schema:
+                $ref: '#/definitions/RequestError'
+
+  /orders:
+    get:
+      tags:
+          - 'orders'
+      description: List products
+        summary: Returns a list of products by filtter.
+        operationId: listProducts
+        produces:
+        - 'application/json'
+        responses:
+          '200':
+            description: A JSON array of products
+            schema:
+              type: array
+              items:
+                $ref: '#/definitions/Orders'
+
+    post:      
+      tags:
+        - 'orders'
+      description: Returns a single product object
+        summary: Create new Product
+        operationId: createProduct
+        produces:
+        - 'application/json'
+        responses:
+          '201':
+            description: A Product object
+            schema:
+              $ref: '#/definitions/Product'
+
+        '400':
+          description: Invalid or empty username or password
+          schema:
+            $ref: '#/definitions/RequestError'
+
+    /products/{productsId}:
+      get:
+        tags:
+          - 'products/:id'
+        description: Returns a single product object
+          summary: Find Product by id
+          operationId: GetProductById
+          produces:
+          - 'application/json'
+          responses:
+            '200':
+              description: Current Product
+              schema:
+                $ref: '#/definitions/Product'
+
+            '400':
+              description: Product does not exists
+              schema:
+                $ref: '#/definitions/RequestError'
+
+      delete:
+        tags:
+          - 'products/:id'
+        descrption:
+          operationId: DeleteProductById
+          summary: Returns a single product by its id
+          responses:
+            '204':
+              description: Product deleted
+              schema:
+                $ref: '#/definitions/Product'
+
+            '400':
+              description: Product does not exists
+              schema:
+                $ref: '#/definitions/RequestError'
+
+      put:
+        tags:
+          - 'product/:id'
+        description: Returns a single product object
+          summary: Replace product entity by id 
+          operationId: setProduct
+          responses:
+            '204':
+              description: Product replaced
+              schema:
+                $ref: '#/definitions/Product'
+
+            '400':
+              description: User cannot be replaced
+              schema:
+                $ref: '#/definitions/RequestError'
+
+      patch:
+        tags:
+          - 'products/:id'
+        description: Update current product values
+          summary: Update product by PK
+          operationId: updateProduct
+          produces:
+          - 'application/json'
+          responses:
+            '200':
+              description: Update product information
+              schema:
+                $ref: '#/definitions/Product'
+            '400':
+              description: Product cannot be updated
+              schema:
+                $ref: '#/definitions/RequestError'
 
 securityDefinitions:
   JWT:
