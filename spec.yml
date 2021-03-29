@@ -1,0 +1,142 @@
+info:
+  title: 'Delilah Resto'
+  description: 'Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.'
+  version: '1.0.0'
+  contact:
+    email: 'jasa1999@hotmail.com'
+  license:
+    name: 'Apache 2.0'
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+
+swagger: '2.0'
+
+basePath: '/v1'
+
+tags:
+  - name: 'profile'
+    description: 'Operations about profile'
+
+  - name: 'user'
+    description: 'Operations about user'
+
+schemes:
+  - 'http'
+  - 'https'
+
+paths:
+  /profile:
+    get:
+      tags:
+        - 'profile'
+      description: Get current user profile values
+      summary: Get logged user profile
+      operationId: GetProfile
+      produces:
+      - 'application/json'
+      responses:
+        '200':
+          description: Current user profile
+          schema:
+            $ref: '#/definitions/User'
+
+    post:
+      tags:
+        - 'profile'
+      description: Update current logged user values
+      summary: Update logged user
+      operationId: UpdateProfile
+      produces:
+      - 'application/json'
+      responses:
+        '200':
+          description: Update user profile
+          schema:
+            $ref: '#/definitions/User'
+
+  /users:
+    get:
+      description: List all users
+      summary: Returns a list of users.
+      operationId: listUsers
+      produces:
+      - 'application/json'
+      responses:
+        '200':
+          description: A JSON array of users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+#
+#    post:
+#      description: Returns a single user object
+#      summary: Create new User
+#      operationId: createUser
+#      produces:
+#      - 'application/json'
+#      responses:
+#        '201':
+#          description: A User object
+#          schema:
+#            $ref: '#/definitions/User'
+#
+#        '400':
+#          description: Invalid or empty username or password
+#          schema:
+#            $ref: '#/definitions/RequestError'
+#
+#  /users/{userId}:
+#    get:
+#      summary: Find User by id
+#      description: Returns a single user object
+#      operationId: GetUserById
+#      produces:
+#      - 'application/json'
+#      responses:
+#        '200':
+#          description: Current User
+#          schema:
+#            $ref: '#/definitions/User'
+#
+#        '400':
+#          description: User does not exists
+#          schema:
+#            $ref: '#/definitions/RequestError'
+#
+#    delete:
+#      operationId: DeleteUserById
+#      summary: Returns a single user by its id
+#      responses:
+#        '204':
+#          description: User deleted
+#
+#        '400':
+#          description: User does not exists
+#          schema:
+#            $ref: '#/definitions/RequestError'
+
+securityDefinitions:
+  JWT:
+    type: apiKey
+    in: header
+    name: Authorization
+
+definitions:
+  User:
+    properties:
+      id:
+        type: integer
+        format: int64
+      username:
+        type: string
+      name:
+        type: string
+      isAdmin:
+        type: boolean
+
+  RequestError:
+    properties:
+      code:
+        type: string
+      message:
+        type: string
